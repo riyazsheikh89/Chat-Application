@@ -7,15 +7,12 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 io.on('connection', (socket) => {
-  console.log("a user connected: ", socket.id);
-
-  socket.on('from_client', ()=> {
-    console.log('event from client');
+   
+  socket.on('send_msg', (data) =>{
+    console.log(data);
+    io.emit('rcvd_msg', data);
   })
 
-  setInterval(() =>{
-    socket.emit('from_server');
-  }, 2000);
 });
 
 app.use("/", express.static(__dirname + "/public"));
