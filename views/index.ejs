@@ -1,0 +1,67 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whatsapp</title>
+</head>
+<body>
+    <h2>Chat App using Socket.io</h2>
+
+    <input id="startchat" type="hidden" data-roomid="<%= id %>"> </input>
+    <input type="text" id="username" placeholder="Enter a username">
+    <input type="text" id="newmsg" placeholder="Type here...">
+    <button id="btn">Send</button>
+
+    <ul id="msglist">
+
+    </ul>
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+
+        let startchat = document.getElementById('startchat');
+        let username = document.getElementById('username');
+        let btn = document.getElementById('btn');
+        let inputMsg = document.getElementById('newmsg');
+        let msgList = document.getElementById('msglist');
+
+
+        socket.emit('join_room', {
+            roomId: startchat.getAttribute('data-roomid')
+        });
+
+
+        btn.onclick = function exec() {
+            socket.emit('send_msg', { 
+                msg: inputMsg.value,
+                username: username.value,
+                roomId: startchat.getAttribute('data-roomid')
+            });
+        }
+
+        // Send message on Enter key press
+        inputMsg.addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+
+                socket.emit('send_msg', { 
+                msg: inputMsg.value,
+                username: username.value,
+                roomId: startchat.getAttribute('data-roomid')
+            });
+            }
+        });
+
+
+        socket.on('rcvd_msg', (data) => {
+            let li_msg = document.createElement('li');
+            li_msg.innerText = `${data.username} : ${data.msg}`;
+            msgList.appendChild(li_msg);
+        });
+
+    </script>
+
+</body>
+</html>

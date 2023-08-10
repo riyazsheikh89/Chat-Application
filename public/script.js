@@ -8,6 +8,14 @@ btn.onclick = function exec() {
     socket.emit('send_msg', {msg: inputMsg.value});
 }
 
+// Send message on Enter key press
+inputMsg.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      socket.emit('send_msg', {msg: inputMsg.value});
+    }
+  });
+
 socket.on('rcvd_msg', (data) => {
     let li_msg = document.createElement('li');
     li_msg.innerText = data.msg;
