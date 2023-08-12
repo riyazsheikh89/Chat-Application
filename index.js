@@ -1,7 +1,9 @@
 const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
+
 const connectDB = require('./config/db-config');
+const Chat = require('./models/Chat');
 
 const app = express();
 const server = http.createServer(app);
@@ -12,8 +14,13 @@ io.on('connection', (socket) => {
     socket.join(data.roomId);
   })
    
-  socket.on('send_msg', (data) =>{
+  socket.on('send_msg', async (data) =>{
     console.log(data);
+    const chat = await Chat.create({
+      user: data.username,
+      roomId: data.roomId,
+      content: data.msg
+    })
     io.to(data.roomId).emit('rcvd_msg', data);
   })
 
@@ -22,9 +29,15 @@ io.on('connection', (socket) => {
 app.set("view engine", "ejs");
 app.use("/", express.static(__dirname + "/public"));
 
-app.get('/chat/:roomId', (req, res) => {
+// chat using roomId
+app.get('/chat/:roomId', async (req, res) => {
+  const chats = await Chat.find({
+    roomId: req.params.roomId
+  });
+
   res.render("index", {
-    id: req.params.roomId
+    id: req.params.roomId,
+    chats: chats
   });
 })
 

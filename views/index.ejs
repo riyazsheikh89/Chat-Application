@@ -13,7 +13,9 @@
     <button id="btn">Send</button>
 
     <ul id="msglist">
-
+        <% for(let i=0; i<chats.length; i++) { %>
+            <li><%= chats[i].user %> : <%= chats[i].content %></li>
+        <% } %>
     </ul>
 
 
@@ -28,6 +30,7 @@
         let msgList = document.getElementById('msglist');
 
 
+        // everytime when the page loades/refresh user gets connected to the given room
         socket.emit('join_room', {
             roomId: startchat.getAttribute('data-roomid')
         });
