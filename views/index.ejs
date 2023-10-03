@@ -3,20 +3,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Whatsapp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ede5e5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button#btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        ul#msglist {
+            list-style-type: none;
+        }
+    </style>
 </head>
 <body>
     <h2>Chat App using Socket.io</h2>
 
-    <input id="startchat" type="hidden" data-roomid="<%= id %>"> </input>
-    <input type="text" id="username" placeholder="Enter your name">
-    <input type="text" id="newmsg" placeholder="Type here...">
-    <button id="btn">Send Message</button>
-
-    <ul id="msglist">
-        <% for(let i=0; i<chats.length; i++) { %>
-            <li><%= chats[i].user %> : <%= chats[i].content %></li>
-        <% } %>
-    </ul>
+    <div class="container">
+        <input id="startchat" type="hidden" data-roomid="<%= id %>"> </input>
+        <input type="text" id="username" placeholder="Enter your name">
+        <input type="text" id="newmsg" placeholder="Type here...">
+        <button id="btn">Send Message</button>
+    </div>
+    
+    <div class="msg-list">
+        <ul id="msglist">
+            <% for(let i=0; i<chats.length; i++) { %>
+                <li>
+                    <%= chats[i].user %> : <%= chats[i].content %>
+                </li>
+                <% } %>
+        </ul>
+    </div>
 
 
     <script src="/socket.io/socket.io.js"></script>
