@@ -6,19 +6,50 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat-App</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            font-family: "Arial";
+            align-items: center;
+            justify-content: center;
+            background-color: #19C37D;
+        }
+
+        .container {
+            text-align: center;
+            margin: 10px;
+        }
+
+        .container h1 {
+            margin: 30px;
+        }
+
+        .container input[type="text"],
+        .container button {
+            margin: 5px;
+            padding: 3px;
+            
+        }
+
+        .container button {
+            font-family: "Arial";
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Chatting Application using Socket.io</h1>
-
-    <input type="text" id="roomId" placeholder="Enter room ID">
-    <input type="text" id="username" placeholder="Enter a username">
-    <input type="text" id="newmsg" placeholder="Type here...">
-    <button id="btn">Send</button>
-
-    <ul id="msglist">
-
-    </ul>
+    <div class="container">
+        <h1>Chat App using Socket.io</h1>
+    
+        <input type="text" id="roomId" placeholder="Enter room ID">
+        <input type="text" id="username" placeholder="Enter a username">
+        <input type="text" id="newmsg" placeholder="Message here...">
+        <button id="btn">Send Message</button>
+        
+        <p>Go to chat page: /chat/roomId</p>
+    </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="script.js"></script>
