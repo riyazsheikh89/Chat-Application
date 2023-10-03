@@ -4,6 +4,9 @@ const socketio = require('socket.io');
 
 const connectDB = require('./config/db-config');
 const Chat = require('./models/Chat');
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
@@ -15,7 +18,7 @@ io.on('connection', (socket) => {
   })
    
   socket.on('send_msg', async (data) =>{
-    console.log(data);
+    // console.log(data);
     const chat = await Chat.create({
       user: data.username,
       roomId: data.roomId,
@@ -42,6 +45,6 @@ app.get('/chat/:roomId', async (req, res) => {
 })
 
 server.listen(3000, async () => {
-  console.log("Server has started on port: 3000");
+  console.log("Server is running on PORT: 3000");
   await connectDB();
 });

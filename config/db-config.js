@@ -1,8 +1,8 @@
 const monngoose = require("mongoose");
 
 const connectDB = async() => {
-    await monngoose.connect("mongodb://localhost/chat-app");
-    console.log("MongoDB Connected!")
+    await monngoose.connect(process.env.MONGODB_URL);
+    console.log("MongoDB Connected Successfully!")
 }
 
 module.exports = connectDB;
